@@ -6,7 +6,8 @@
             :key="link.url"
             tag="li"
             :to="link.url"
-            :ecact="link.exact"
+            active-class="active"
+            :exact="link.exact"
         >
             <a href="#" class="waves-effect waves-orange pointer">{{link.title}}</a>
         </router-link>
