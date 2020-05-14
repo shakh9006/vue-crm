@@ -6,7 +6,19 @@
 
 <script>
     export default {
-        name: "Empty"
+        name: "Empty",
+        computed: {
+            error() {
+                return this.$store.getters.error;
+            }
+
+        },
+
+        watch: {
+            error(fError) {
+                this.$message(fError.message);
+            }
+        }
     }
 </script>
 

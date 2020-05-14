@@ -4,16 +4,37 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import dateFilter from './filters/date.filters'
+import messagePlugin from './utils/message.plugin'
 import './registerServiceWorker'
 import "materialize-css/dist/js/materialize.min"
 
-Vue.config.productionTip = false;
+import firebase from "firebase/app";
+import 'firebase/auth';
+import 'firebase/database';
 
-Vue.use(Vuelidate)
+
+firebase.initializeApp({
+  apiKey: "AIzaSyBnxCvGAS1mGW8DPdkhvYhBai435JpNFvA",
+  authDomain: "simple-crm-66ca0.firebaseapp.com",
+  databaseURL: "https://simple-crm-66ca0.firebaseio.com",
+  projectId: "simple-crm-66ca0",
+  storageBucket: "simple-crm-66ca0.appspot.com",
+  messagingSenderId: "183738002933",
+  appId: "1:183738002933:web:66a7ef19cced1eda26c4bc"
+});
+
+let app;
+Vue.config.productionTip = false;
+Vue.use(messagePlugin);
+Vue.use(Vuelidate);
 Vue.filter('dateFormat', dateFilter);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+firebase.auth().onAuthStateChanged(() => {
+  if(!app) {
+    app = new Vue({
+      router,
+      store,
+      render: h => h(App)
+    }).$mount('#app')
+  }
+});
