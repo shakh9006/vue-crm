@@ -1,9 +1,7 @@
 import firebase from "firebase/app";
 export default {
     actions: {
-       async login({dispatch, commit}, {email, password}) {
-           console.log(dispatch);
-           console.log(commit);
+       async login({commit}, {email, password}) {
            try {
                 await firebase.auth().signInWithEmailAndPassword(email, password);
             }catch (e) {
@@ -32,8 +30,9 @@ export default {
            return user ? user.uid : null;
        },
 
-       async logout(){
+       async logout({commit}){
            await firebase.auth().signOut();
+           commit('clearInfo');
        },
     }
 }

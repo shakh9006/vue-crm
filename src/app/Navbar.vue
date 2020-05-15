@@ -11,7 +11,7 @@
             <ul class="right hide-on-small-and-down">
                 <li>
                     <a ref="dropdown" class="dropdown-trigger black-text" href="#" data-target="dropdown">
-                        USER NAME
+                        {{ getName }}
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
 
@@ -24,7 +24,7 @@
                         <li class="divider" tabindex="-1"></li>
                         <li>
                             <a @click.prevent="logout" href="#" class="black-text">
-                                <i class="material-icons">assignment_return</i>Logout
+                                <i class="material-icons">assignment_return</i>{{getText}}
                             </a>
                         </li>
                     </ul>
@@ -42,7 +42,18 @@
                 date: '',
                 timer: null,
                 dropdown: null,
+                isUserValid: true,
             }
+        },
+
+        computed: {
+           getName() {
+               return this.$store.getters.getInfo.name ? this.$store.getters.getInfo.name : 'Please Sign In';
+           },
+
+           getText() {
+               return this.$store.getters.getInfo.name ? 'Logout' : 'Sign Up'
+           }
         },
 
         mounted() {
@@ -56,8 +67,13 @@
 
         methods: {
             async logout() {
-               await  this.$store.dispatch('logout');
-               await  this.$router.push('/login?message=logout');
+
+               if(this.$store.getters.getInfo.name) {
+                   await  this.$store.dispatch('logout');
+                   await  this.$router.push('/login?message=logout');
+               }else{
+                   await  this.$router.push('/login');
+               }
             },
         },
 

@@ -4,59 +4,52 @@
             <div class="page-title">
                 <h3>Счет</h3>
 
-                <button class="btn waves-effect waves-light btn-small">
+                <button class="btn waves-effect waves-light btn-small" @click.prevent="refresh">
                     <i class="material-icons">refresh</i>
                 </button>
             </div>
+            <Loader v-if="loading" />
+            <div v-else class="row">
 
-            <div class="row">
-                <div class="col s12 m6 l4">
-                    <div class="card light-blue bill-card">
-                        <div class="card-content white-text">
-                            <span class="card-title">Счет в валюте</span>
+                <HomeBill :rates="currency.rates"/>
 
-                            <p class="currency-line">
-                                <span>12.0 Р</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col s12 m6 l8">
-                    <div class="card orange darken-3 bill-card">
-                        <div class="card-content white-text">
-                            <div class="card-header">
-                                <span class="card-title">Курс валют</span>
-                            </div>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Валюта</th>
-                                    <th>Курс</th>
-                                    <th>Дата</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                <tr>
-                                    <td>руб</td>
-                                    <td>12121</td>
-                                    <td>12.12.12</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <HomeBillList :currency="currency"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import HomeBill from "../app/HomeBill";
+    import HomeBillList from "../app/HomeBillList"
 
     export default {
         name: 'Home',
-        components: {}
+        components: {
+            HomeBill, HomeBillList
+        },
+
+        data() {
+            return {
+                loading: true,
+                currency: null,
+            }
+        },
+
+        async mounted() {
+            this.getFixer()
+        },
+
+        methods: {
+            async refresh() {
+                this.loading = true;
+                this.getFixer();
+            },
+
+            async getFixer() {
+                this.currency = await this.$store.dispatch('fetchFixer');
+                this.loading = false;
+            }
+        }
     }
 </script>
