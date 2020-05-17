@@ -136,7 +136,7 @@
                 }
 
                 if(this.checkType) {
-                    this.$store.dispatch('fetchRecord', {
+                    this.$store.dispatch('createRecord', {
                         type: this.type,
                         desc: this.desc,
                         amount: this.amount,
