@@ -42,7 +42,7 @@
                 required: true,
             },
         },
-        name: "HistoryTable"
+        name: "HistoryTable",
     }
 </script>
 

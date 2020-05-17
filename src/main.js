@@ -9,6 +9,7 @@ import './registerServiceWorker'
 import "materialize-css/dist/js/materialize.min"
 import Loader from "./components/Loader";
 import firebase from "firebase/app";
+import Paginate from 'vuejs-paginate'
 import 'firebase/auth';
 import 'firebase/database';
 
@@ -25,6 +26,7 @@ firebase.initializeApp({
 
 let app;
 Vue.component('Loader', Loader);
+Vue.component('Paginate', Paginate)
 Vue.config.productionTip = false;
 Vue.use(messagePlugin);
 Vue.use(Vuelidate);
