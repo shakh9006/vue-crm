@@ -111,11 +111,12 @@
         async mounted() {
             // Upload fields
             window.M.updateTextFields();
-
             this.categories = await this.$store.dispatch('fetchCategories');
-            this.loading = false;
-            this.category   = this.categories[0].id;
-            setTimeout(() => { this.select = window.M.FormSelect.init(this.$refs.select) }, 0);
+            if(this.categories.length) {
+                this.loading = false;
+                this.category   = this.categories[0].id;
+                setTimeout(() => { this.select = window.M.FormSelect.init(this.$refs.select) }, 0);
+            }
         },
 
         computed: {
@@ -136,13 +137,14 @@
                 }
 
                 if(this.checkType) {
+                    const date = new Date();
                     this.$store.dispatch('createRecord', {
                         type: this.type,
                         desc: this.desc,
                         amount: this.amount,
                         category: this.category,
 
-                        date: new Date().toJSON(),
+                        date: date.toJSON(),
                     });
 
                     const bill = this.type === 'income'

@@ -7,7 +7,7 @@ import dateFilter from './filters/date.filters'
 import messagePlugin from './utils/message.plugin'
 import './registerServiceWorker'
 import "materialize-css/dist/js/materialize.min"
-import Loader from "./app/Loader";
+import Loader from "./components/Loader";
 import firebase from "firebase/app";
 import 'firebase/auth';
 import 'firebase/database';

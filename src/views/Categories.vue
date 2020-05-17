@@ -25,8 +25,9 @@
 </template>
 
 <script>
-    import CreateCategory from "../app/CreateCategory";
-    import EditCategory from "../app/EditCategory";
+    import CreateCategory from "../components/CreateCategory";
+    import EditCategory from "../components/EditCategory";
+
     export default {
         name: "Categories",
 
@@ -57,6 +58,7 @@
             this.categories = await this.$store.dispatch('fetchCategories');
             this.loading = false;
         },
+
     }
 </script>
 

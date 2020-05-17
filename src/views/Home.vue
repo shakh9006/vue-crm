@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import HomeBill from "../app/HomeBill";
-    import HomeBillList from "../app/HomeBillList"
+    import HomeBill from "../components/HomeBill";
+    import HomeBillList from "../components/HomeBillList"
 
     export default {
         name: 'Home',

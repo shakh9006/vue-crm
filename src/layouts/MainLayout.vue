@@ -19,8 +19,8 @@
 </template>
 
 <script>
-    import Navbar from "../app/Navbar";
-    import Sidebar from "../app/Sidebar";
+    import Navbar from "../components/Navbar";
+    import Sidebar from "../components/Sidebar";
     export default {
         name: "MainLayout",
         components: {

@@ -1,50 +1,46 @@
 <template>
     <div>
         <div class="page-title">
-            <h3>История записей</h3>
+            <h3>Record History</h3>
         </div>
+        <Loader v-if="loading"/>
+        <p class="center" v-else-if="!records.length">There is no any records. <router-link to="/record">Please Create New</router-link></p>
+        <template v-else>
+            <div class="history-chart">
+                <canvas></canvas>
+            </div>
 
-        <div class="history-chart">
-            <canvas></canvas>
-        </div>
-
-        <section>
-            <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Сумма</th>
-                    <th>Дата</th>
-                    <th>Категория</th>
-                    <th>Тип</th>
-                    <th>Открыть</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>1212</td>
-                    <td>12.12.32</td>
-                    <td>name</td>
-                    <td>
-                        <span class="white-text badge red">Расход</span>
-                    </td>
-                    <td>
-                        <button class="btn-small btn">
-                            <i class="material-icons">open_in_new</i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
+            <section>
+                <HistoryTable :records="records"/>
+            </section>
+        </template>
     </div>
 </template>
 
 <script>
+    import HistoryTable from "../components/HistoryTable";
     export default {
-        name: "History"
+        name: "History",
+        components: {
+            HistoryTable
+        },
+        data: () => ({
+            records: [],
+            loading: true,
+            categories: [],
+        }),
+
+        async mounted() {
+            const records = await this.$store.dispatch('fetchRecords');
+            this.categories = await this.$store.dispatch('fetchCategories');
+            this.records = records.map(r => ({
+                ...r,
+                categoryName: this.categories.find(c => c.id = r.category).title,
+                typeColor: r.type === 'income' ? 'green' : 'red',
+            }));
+
+            this.loading = false;
+        },
     }
 </script>
 
