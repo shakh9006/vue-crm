@@ -109,13 +109,14 @@
         },
 
         async mounted() {
-            // Upload fields
-            window.M.updateTextFields();
             this.categories = await this.$store.dispatch('fetchCategories');
             if(this.categories.length) {
                 this.loading = false;
                 this.category   = this.categories[0].id;
-                setTimeout(() => { this.select = window.M.FormSelect.init(this.$refs.select) }, 0);
+                setTimeout(() => {
+                    window.M.updateTextFields();
+                    this.select = window.M.FormSelect.init(this.$refs.select)
+                }, 0);
             }
         },
 
